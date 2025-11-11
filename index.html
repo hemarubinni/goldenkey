@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Golden Key Pvt. Ltd.</title>
+  <style>
+    body {margin:0; font-family: 'Poppins', sans-serif; background:#faf9f6; color:#222;}
+    header {background:#1b1b1b; color:gold; padding:20px 50px; display:flex; justify-content:space-between; align-items:center;}
+    header h1 {margin:0; font-size:26px;}
+    nav a {color:white; text-decoration:none; margin:0 15px; font-weight:500;}
+    nav a:hover {color:gold;}
+    .hero {background:url('https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat; color:white; text-align:center; padding:140px 20px;}
+    .hero h2 {font-size:48px; margin-bottom:10px; text-shadow:2px 2px 4px rgba(0,0,0,0.7);}
+    .hero p {font-size:20px;}
+    section {padding:60px 10%; text-align:center;}
+    .about, .amenities, .gallery, .contact {margin-top:40px;}
+    .grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; margin-top:30px;}
+    .card {background:white; border-radius:10px; padding:20px; box-shadow:0 4px 8px rgba(0,0,0,0.1);}
+    .contact form {max-width:600px; margin:0 auto; text-align:left;}
+    input, textarea, select {width:100%; padding:12px; margin:8px 0; border:1px solid #ccc; border-radius:6px;}
+    button {background:gold; color:black; border:none; padding:14px 20px; border-radius:6px; cursor:pointer; font-weight:600;}
+    button:hover {background:#e6c200;}
+    footer {background:#1b1b1b; color:white; text-align:center; padding:20px; margin-top:50px;}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Golden Key Pvt. Ltd.</h1>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#amenities">Amenities</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Enquiry</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Unlock Your Dream Apartment</h2>
+  <p>Luxury homes crafted for comfort and class in Coimbatore.</p>
+</section>
+
+<section id="about" class="about">
+  <h2>About Us</h2>
+  <p>Golden Key Pvt. Ltd. is a leading real estate promoter in Coimbatore, offering premium apartments with modern design and world-class amenities. Our goal is to bring luxury, comfort, and safety under one roof.</p>
+</section>
+
+<section id="amenities" class="amenities">
+  <h2>Amenities</h2>
+  <div class="grid">
+    <div class="card">🏊 Swimming Pool</div>
+    <div class="card">🏋️ Gym & Fitness Center</div>
+    <div class="card">🌳 Landscaped Garden</div>
+    <div class="card">🎥 Theatre & Clubhouse</div>
+  </div>
+</section>
+
+<section id="gallery" class="gallery">
+  <h2>Gallery</h2>
+  <div class="grid">
+    <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80" class="card" alt="Apartment">
+    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" class="card" alt="Interior">
+    <img src="https://images.unsplash.com/photo-1628744445201-9b2fcf34c61e?auto=format&fit=crop&w=600&q=80" class="card" alt="Lobby">
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <h2>Enquiry Form</h2>
+  <form id="enquiryForm">
+    <label>Name:</label>
+    <input type="text" id="name" required>
+    <label>Phone:</label>
+    <input type="text" id="phone" required>
+    <label>Email:</label>
+    <input type="email" id="email">
+    <label>Preferred Visit Date:</label>
+    <input type="date" id="visit_date">
+    <label>Notes:</label>
+    <textarea id="notes"></textarea>
+    <button type="submit">Submit Enquiry</button>
+  </form>
+  <p id="responseMessage" style="margin-top:15px;font-weight:bold;"></p>
+</section>
+
+<footer>
+  <p>© 2025 Golden Key Pvt. Ltd. | All Rights Reserved</p>
+</footer>
+
+<script>
+  document.getElementById("enquiryForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = {
+      name: document.getElementById("name").value,
+      phone: document.getElementById("phone").value,
+      email: document.getElementById("email").value,
+      visit_date: document.getElementById("visit_date").value,
+      notes: document.getElementById("notes").value
+    };
+    const res = await fetch("http://127.0.0.1:5000/submit_lead", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    document.getElementById("responseMessage").textContent = result.message;
+    document.getElementById("enquiryForm").reset();
+  });
+</script>
+
+</body>
+</html>
