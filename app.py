@@ -1,9 +1,11 @@
 # app.py
-from flask import Flask, request, jsonify
+
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import sqlite3
 from datetime import datetime
 import os
+
 
 app = Flask(__name__)
 CORS(app)
@@ -52,6 +54,20 @@ def submit_lead():
     conn.close()
 
     return jsonify({"status": "success", "message": "Lead stored successfully!"})
+@app.route("/")
+def home():
+    return """
+    <html>
+        <head>
+            <title>Golden Key Apartments</title>
+        </head>
+        <body style='font-family:Arial;text-align:center;margin-top:50px;'>
+            <h1>Welcome to Golden Key Apartments</h1>
+            <p>Submit your enquiry <a href="/enquiry">here</a></p>
+        </body>
+    </html>
+    """
+
 
 
 if __name__ == "__main__":
